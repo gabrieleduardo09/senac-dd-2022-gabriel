@@ -89,9 +89,22 @@ public class ClienteDAO {
 	
 	public ArrayList<Cliente> consultarTodos(){
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+		
 		//TODO implementar
+		Connection conexao = Banco.getConnection();
 		//SELECT * FROM CLIENTE
+		String sql = "SELECT * FROM CLIENTE";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = stmt.executeQuery(sql);
+			while(resultado.next()){
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar a consulta de todos os clientes. Causa:" + e.getMessage());
+		}
 		
 		return clientes;
 	}
+	
 }
