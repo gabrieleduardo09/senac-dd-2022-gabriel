@@ -2,16 +2,14 @@ package model.vo;
 
 import java.time.LocalDateTime;
 
-import model.vo.Telefone;
-
 public class LinhaTelefonica {
-
+	
 	private int id;
 	private Telefone telefone;
-	private int idCliente; // para evitar looping
-	private LocalDateTime dataAtivacao;
+	private int idCliente; //para evitar looping
+	private LocalDateTime dataAtivacao; 
 	private LocalDateTime dataDesativacao;
-
+	
 	public LinhaTelefonica() {
 	}
 
@@ -24,7 +22,7 @@ public class LinhaTelefonica {
 		this.dataAtivacao = dataAtivacao;
 		this.dataDesativacao = dataDesativacao;
 	}
-
+	
 	public LinhaTelefonica(Telefone telefone, int idCliente, LocalDateTime dataAtivacao,
 			LocalDateTime dataDesativacao) {
 		super();
@@ -33,7 +31,7 @@ public class LinhaTelefonica {
 		this.dataAtivacao = dataAtivacao;
 		this.dataDesativacao = dataDesativacao;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -73,5 +71,4 @@ public class LinhaTelefonica {
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
-
 }

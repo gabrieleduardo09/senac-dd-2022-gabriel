@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.vo.Cliente;
+import model.vo.Endereco;
+import model.vo.LinhaTelefonica;
 
-public class ClienteDAO {
- 
+public class ClienteDAO implements BaseDAO<Cliente>{
+	
 	public Cliente inserir(Cliente novoCliente) {
 		Connection conexao = Banco.getConnection();
 		String sql = " INSERT INTO CLIENTE(NOME, CPF)" 
@@ -78,33 +81,58 @@ public class ClienteDAO {
 	
 	public Cliente consultar(int id) {
 		Cliente clienteConsultado = null;
-		//TODO implementar		
-		//Connection conexao = Banco.getConnection()
-		//String sql = " DELETE FROM CLIENTE " + " WHERE ID = ?";
-		//PreparedStatement stmt = Banco.getPreparedStatementWithPk( conexao, sql);
-		//SELECT * FROM CLIENTE WHERE ID = ?
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT * FROM CLIENTE "
+					+" WHERE ID=?";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			stmt.setInt(1, id);
+			ResultSet resultado = stmt.executeQuery();
+			
+			if(resultado.next()) {
+				clienteConsultado = construirDoResultSet(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar cliente (id:" + id + ". Causa:" + e.getMessage());
+		}
 		
 		return clienteConsultado;
 	}
 	
+	private Cliente construirDoResultSet(ResultSet resultado) throws SQLException {
+		Cliente clienteConsultado = new Cliente();
+		clienteConsultado.setId(resultado.getInt("id"));
+		clienteConsultado.setCpf(resultado.getString("cpf"));
+		clienteConsultado.setNome(resultado.getString("nome"));
+		
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
+		Endereco enderecoDoCliente = enderecoDAO.consultar(resultado.getInt("id_endereco"));
+		clienteConsultado.setEndereco(enderecoDoCliente);
+		
+		LinhaTelefonicaDAO linhaDAO = new LinhaTelefonicaDAO();
+		ArrayList<LinhaTelefonica> linhas = linhaDAO.consultarPorIdCliente(resultado.getInt("id_cliente"));
+		clienteConsultado.setLinhas(linhas);
+		return null;
+	}
+
 	public ArrayList<Cliente> consultarTodos(){
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-		
-		//TODO implementar
 		Connection conexao = Banco.getConnection();
-		//SELECT * FROM CLIENTE
-		String sql = "SELECT * FROM CLIENTE";
+		String sql = " SELECT * FROM CLIENTE ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		
 		try {
-			ResultSet resultado = stmt.executeQuery(sql);
-			while(resultado.next()){
-				
+			ResultSet resultado = stmt.executeQuery();
+			
+			while(resultado.next()) {
+				Cliente clienteConsultado = construirDoResultSet(resultado);
+				clientes.add(clienteConsultado);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao executar a consulta de todos os clientes. Causa:" + e.getMessage());
+			System.out.println("Erro ao consultar todos os clientes. Causa:" + e.getMessage());
 		}
 		
 		return clientes;
 	}
-	
 }

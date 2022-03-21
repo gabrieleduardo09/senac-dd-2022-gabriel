@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.vo.Endereco;
+import model.vo.Telefone;
 
 public class EnderecoDAO {
 
@@ -83,18 +84,26 @@ public class EnderecoDAO {
 	
 	public Endereco consultar(int id) {
 		Endereco enderecoConsultado = null;
-		//TODO implementar	
 		Connection conexao = Banco.getConnection();
-		//SELECT * FROM ENDERECO WHERE ID = ?
-		String sql = " SELECT * FROM WHERE ID=?";
+		String sql = " SELECT * FROM ENDERECO "
+					+" WHERE ID=?";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
 		
 		try {
 			stmt.setInt(1, id);
-			ResultSet resultado = stmt.executeQuery(sql);
+			ResultSet resultado = stmt.executeQuery();
 			
+			if(resultado.next()) {
+				enderecoConsultado = new Endereco();
+				enderecoConsultado.setId(resultado.getInt("id"));
+				enderecoConsultado.setRua(resultado.getString("rua"));
+				enderecoConsultado.setNumero(resultado.getString("numero"));
+				enderecoConsultado.setCidade(resultado.getString("cidade"));
+				enderecoConsultado.setCep(resultado.getString("cep"));
+				enderecoConsultado.setUf(resultado.getString("uf"));
+			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao remover endereço. Causa:" + e.getMessage());
+			System.out.println("Erro ao consultar endereço (id:" + id + ". Causa:" + e.getMessage());
 		}
 		
 		return enderecoConsultado;
