@@ -37,6 +37,7 @@ public class ExecutavelTelefonia {
 //		for(LinhaTelefonica linha: pele.getLinhas()) {
 //			System.out.println(linha.getTelefone().toString());
 //		}
+		//
 	}
 
 	private static void testarCrudEndereco() {
