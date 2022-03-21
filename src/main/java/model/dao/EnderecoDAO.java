@@ -32,7 +32,7 @@ public class EnderecoDAO {
 				novoEndereco.setId(chavesGeradas.getInt(1));
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir endereÃ§o. Causa:" + e.getMessage());
+			System.out.println("Erro ao inserir endereço. Causa:" + e.getMessage());
 		}
 		
 		return novoEndereco;
@@ -58,7 +58,7 @@ public class EnderecoDAO {
 			int linhasAfetadas = stmt.executeUpdate();
 			atualizou = linhasAfetadas > 0;
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar endereÃ§o. Causa:" + e.getMessage());
+			System.out.println("Erro ao atualizar endereçoo. Causa:" + e.getMessage());
 		}
 		
 		return atualizou;
@@ -76,12 +76,12 @@ public class EnderecoDAO {
 			stmt.setInt(1, id);
 			removeu = stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
-			System.out.println("Erro ao remover endereÃ§o. Causa:" + e.getMessage());
+			System.out.println("Erro ao remover endereço. Causa:" + e.getMessage());
 		}		
 		
 		return removeu;
 	}
-	
+
 	public Endereco consultar(int id) {
 		Endereco enderecoConsultado = null;
 		Connection conexao = Banco.getConnection();
@@ -94,25 +94,44 @@ public class EnderecoDAO {
 			ResultSet resultado = stmt.executeQuery();
 			
 			if(resultado.next()) {
-				enderecoConsultado = new Endereco();
-				enderecoConsultado.setId(resultado.getInt("id"));
-				enderecoConsultado.setRua(resultado.getString("rua"));
-				enderecoConsultado.setNumero(resultado.getString("numero"));
-				enderecoConsultado.setCidade(resultado.getString("cidade"));
-				enderecoConsultado.setCep(resultado.getString("cep"));
-				enderecoConsultado.setUf(resultado.getString("uf"));
+				enderecoConsultado = construirDoResultSet(resultado);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao consultar endereÃ§o (id:" + id + ". Causa:" + e.getMessage());
+			System.out.println("Erro ao consultar endereço (id:" + id + ". Causa:" + e.getMessage());
 		}
 		
+		return enderecoConsultado;
+	}
+
+	private Endereco construirDoResultSet(ResultSet resultado) throws SQLException {
+		Endereco enderecoConsultado;
+		enderecoConsultado = new Endereco();
+		enderecoConsultado.setId(resultado.getInt("id"));
+		enderecoConsultado.setRua(resultado.getString("rua"));
+		enderecoConsultado.setNumero(resultado.getString("numero"));
+		enderecoConsultado.setCidade(resultado.getString("cidade"));
+		enderecoConsultado.setCep(resultado.getString("cep"));
+		enderecoConsultado.setUf(resultado.getString("uf"));
 		return enderecoConsultado;
 	}
 	
 	public ArrayList<Endereco> consultarTodos(){
 		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
-		//TODO implementar
-		//SELECT * FROM ENDERECO
+
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT * FROM ENDERECO ";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			ResultSet resultado = stmt.executeQuery();
+			
+			while(resultado.next()) {
+				Endereco enderecoConsultado = construirDoResultSet(resultado);
+				enderecos.add(enderecoConsultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar todos os endereços. Causa:" + e.getMessage());
+		}
 		
 		return enderecos;
 	}

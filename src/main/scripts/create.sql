@@ -27,7 +27,7 @@ CREATE TABLE `telefonia`.`endereco` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ddd` VARCHAR(2) NOT NULL,
   `numero` VARCHAR(10) NOT NULL,
-  `tipo` INT NOT NULL COMMENT 'Fixo: 1\nMÃ³vel: 2',
+  `tipo` INT NOT NULL COMMENT 'Fixo: 1\Móvel: 2',
   `ativo` TINYINT NOT NULL,
   PRIMARY KEY (`id`));
 

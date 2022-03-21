@@ -1,6 +1,10 @@
 package model.vo;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.vo.Endereco;
+import model.vo.LinhaTelefonica;
 
 public class Cliente {
 
@@ -9,7 +13,7 @@ public class Cliente {
 	private String cpf;
 	private Endereco endereco;
 	private List<LinhaTelefonica> linhas;
-	
+
 	public Cliente() {
 		super();
 	}
@@ -22,7 +26,13 @@ public class Cliente {
 		this.linhas = linhas;
 	}
 
-
+	public Cliente(String nome, String cpf, Endereco endereco) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereco = endereco;
+		this.linhas = new ArrayList<LinhaTelefonica>();
+	}
 
 	public int getId() {
 		return id;
@@ -62,5 +72,11 @@ public class Cliente {
 
 	public void setLinhas(List<LinhaTelefonica> linhas) {
 		this.linhas = linhas;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", linhas=" + linhas
+				+ "]";
 	}
 }
