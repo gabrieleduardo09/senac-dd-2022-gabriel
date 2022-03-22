@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import controller.ClienteController;
+import controller.EnderecoController;
 import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
 import model.dao.LinhaTelefonicaDAO;
@@ -24,45 +26,47 @@ public class ExecutavelTelefonia {
 		// testarCrudLinhaTelefonica();
 
 		testarCadastroClienteComJOptionPane();
+
+		// TODO exercÃ­cio (implementar o cadastro com MVC completo)
+		testarCadastroEnderecoComJOptionPane();
 	}
 
 	private static void testarCadastroClienteComJOptionPane() {
 		String cpf = JOptionPane.showInputDialog("Informe o CPF (somente números)");
 		String nome = JOptionPane.showInputDialog("Informe o nome completo");
 
-		// TODO Violando o MVC...
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		ClienteDAO clienteDAO = new ClienteDAO();
+		EnderecoController enderecoController = new EnderecoController();
+		ClienteController clienteController = new ClienteController();
 
-		ArrayList<Endereco> enderecos = enderecoDAO.consultarTodos();
+		ArrayList<Endereco> enderecos = enderecoController.pesquisarTodos();
 
 		Endereco enderecoSelecionado = (Endereco) JOptionPane.showInputDialog(null, "Selecione um endereço",
 				"Cadastro de novo cliente", JOptionPane.INFORMATION_MESSAGE, null, enderecos.toArray(), null);
 
 		Cliente novoCliente = new Cliente(nome, cpf, enderecoSelecionado);
-		novoCliente = clienteDAO.inserir(novoCliente);
+		String mensagem = clienteController.salvar(novoCliente);
 
-		if (novoCliente.getId() > 0) {
-			JOptionPane.showMessageDialog(null, "Novo cliente salvo!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-		} else {
-			JOptionPane.showMessageDialog(null, "Erro ao salvar cliente", "Erro", JOptionPane.ERROR_MESSAGE);
-		}
+		JOptionPane.showMessageDialog(null, mensagem, "Mensagem", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private static void testarCrudTelefone() {
 		// TODO Auto-generated method stub
-		
-//		 CREATE TABLE `telefonia`.`telefone` (
-//				  `id` INT NOT NULL AUTO_INCREMENT,
-//				  `ddd` VARCHAR(2) NOT NULL,
-//				  `numero` VARCHAR(10) NOT NULL,
-//				  `tipo` INT NOT NULL COMMENT 'Fixo: 1\Móvel: 2',
-//				  `ativo` TINYINT NOT NULL,
-//				  PRIMARY KEY (`id`));
-		String ddd = JOptionPane.showInputDialog("Informe o DDD");
-		String numero = JOptionPane.showInputDialog("Informe o número de telefone");
-		String tipo = JOptionPane.showInputDialog("Tipo Fixo: 1 | Móvel: 2");
+	}
 
+	private static void testarCadastroEnderecoComJOptionPane() {
+		// TODO Auto-generated method stub
+		String rua = JOptionPane.showInputDialog("Digite a Rua");
+		String numero = JOptionPane.showInputDialog("Digite o número");
+		String cidade = JOptionPane.showInputDialog("Digite a Cidade");
+		String uf = JOptionPane.showInputDialog("Digite o UF (apenas a sigla");
+		String cep = JOptionPane.showInputDialog("Digite o CEP (somente números)");
+		
+		EnderecoController enderecoController = new EnderecoController();
+		
+		Endereco novoEndereco = new Endereco(rua, numero, cidade, uf, cep);
+		String mensagem = enderecoController.salvar(novoEndereco);
+		
+		
 	}
 
 	private static void testarCrudEndereco() {
