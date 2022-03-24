@@ -109,7 +109,7 @@ public class ClienteDAO implements BaseDAO<Cliente> {
 		clienteConsultado.setEndereco(enderecoDoCliente);
 
 		LinhaTelefonicaDAO linhaDAO = new LinhaTelefonicaDAO();
-		ArrayList<LinhaTelefonica> linhas = linhaDAO.consultarPorIdCliente(resultado.getInt("id_cliente"));
+		ArrayList<LinhaTelefonica> linhas = linhaDAO.consultarPorIdCliente(resultado.getInt("id"));
 		clienteConsultado.setLinhas(linhas);
 		return clienteConsultado;
 	}

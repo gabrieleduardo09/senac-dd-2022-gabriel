@@ -25,10 +25,30 @@ public class ExecutavelTelefonia {
 //		testarCrudTelefone();
 		// testarCrudLinhaTelefonica();
 
-		testarCadastroClienteComJOptionPane();
+		
+		// testarCadastroClienteComJOptionPane();
+		exclusaoClienteComJOptionPane();
 
 		// TODO exercÃ­cio (implementar o cadastro com MVC completo)
-		testarCadastroEnderecoComJOptionPane();
+		// testarCadastroEnderecoComJOptionPane();
+
+	}
+
+	private static void exclusaoClienteComJOptionPane() {
+		ClienteController clienteController = new ClienteController();
+		ArrayList<Cliente> clientes = clienteController.consultarTodos();
+
+		Cliente removerCliente = (Cliente) JOptionPane.showInputDialog(null, "Selecione o cliente",
+				"Exclusão de cliente", JOptionPane.INFORMATION_MESSAGE, null, clientes.toArray(), null);
+
+		boolean remover = clienteController.remover(removerCliente);
+
+		if (remover) {
+			JOptionPane.showMessageDialog(null,
+					"Cliente " + removerCliente.getNome() + " (" + removerCliente.getCpf() + ") foi excluído");
+		} else {
+			JOptionPane.showMessageDialog(null, "Cliente não foi excluído", "Erro", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	private static void testarCadastroClienteComJOptionPane() {
@@ -58,15 +78,15 @@ public class ExecutavelTelefonia {
 		String rua = JOptionPane.showInputDialog("Digite a Rua");
 		String numero = JOptionPane.showInputDialog("Digite o número");
 		String cidade = JOptionPane.showInputDialog("Digite a Cidade");
-		String uf = JOptionPane.showInputDialog("Digite o UF (apenas a sigla");
+		String uf = JOptionPane.showInputDialog("Digite o UF (apenas a sigla)");
 		String cep = JOptionPane.showInputDialog("Digite o CEP (somente números)");
-		
+
 		EnderecoController enderecoController = new EnderecoController();
-		
+
 		Endereco novoEndereco = new Endereco(rua, numero, cidade, uf, cep);
 		String mensagem = enderecoController.salvar(novoEndereco);
-		
-		
+
+		JOptionPane.showMessageDialog(null, mensagem, "Mensagem", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private static void testarCrudEndereco() {
@@ -157,4 +177,5 @@ public class ExecutavelTelefonia {
 		System.out.println("Quantidade de linhas: " + linhas.size());
 
 	}
+
 }

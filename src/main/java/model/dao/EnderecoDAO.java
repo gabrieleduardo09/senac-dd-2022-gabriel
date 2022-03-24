@@ -13,40 +13,37 @@ public class EnderecoDAO {
 
 	public Endereco inserir(Endereco novoEndereco) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO ENDERECO(RUA, UF, CIDADE, NUMERO, CEP)" 
-					+ "VALUES (?, ?, ?, ?, ?);";
-		
+		String sql = " INSERT INTO ENDERECO(RUA, UF, CIDADE, NUMERO, CEP)" + "VALUES (?, ?, ?, ?, ?);";
+
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conexao, sql);
-		
+
 		try {
 			stmt.setString(1, novoEndereco.getRua());
 			stmt.setString(2, novoEndereco.getUf());
 			stmt.setString(3, novoEndereco.getCidade());
 			stmt.setString(4, novoEndereco.getNumero());
 			stmt.setString(5, novoEndereco.getCep());
-			
+
 			stmt.execute();
-			
+
 			ResultSet chavesGeradas = stmt.getGeneratedKeys();
-			if(chavesGeradas.next()) {
+			if (chavesGeradas.next()) {
 				novoEndereco.setId(chavesGeradas.getInt(1));
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir endereço. Causa:" + e.getMessage());
 		}
-		
+
 		return novoEndereco;
 	}
-	
+
 	public boolean atualizar(Endereco endereco) {
 		boolean atualizou = false;
 		Connection conexao = Banco.getConnection();
-		String sql = " UPDATE ENDERECO "
-					+" SET RUA=?, UF=?, CIDADE=?, NUMERO=?, CEP=? "
-					+" WHERE ID=?";
-		
+		String sql = " UPDATE ENDERECO " + " SET RUA=?, UF=?, CIDADE=?, NUMERO=?, CEP=? " + " WHERE ID=?";
+
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conexao, sql);
-		
+
 		try {
 			stmt.setString(1, endereco.getRua());
 			stmt.setString(2, endereco.getUf());
@@ -54,52 +51,50 @@ public class EnderecoDAO {
 			stmt.setString(4, endereco.getNumero());
 			stmt.setString(5, endereco.getCep());
 			stmt.setInt(6, endereco.getId());
-			
+
 			int linhasAfetadas = stmt.executeUpdate();
 			atualizou = linhasAfetadas > 0;
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar endereçoo. Causa:" + e.getMessage());
+			System.out.println("Erro ao atualizar endereço. Causa:" + e.getMessage());
 		}
-		
+
 		return atualizou;
 	}
-	
+
 	public boolean remover(int id) {
 		boolean removeu = false;
-		
+
 		Connection conexao = Banco.getConnection();
-		String sql = " DELETE FROM ENDERECO "
-					+" WHERE ID=?";
+		String sql = " DELETE FROM ENDERECO " + " WHERE ID=?";
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conexao, sql);
-		
+
 		try {
 			stmt.setInt(1, id);
 			removeu = stmt.executeUpdate() > 0;
 		} catch (SQLException e) {
 			System.out.println("Erro ao remover endereço. Causa:" + e.getMessage());
-		}		
-		
+		}
+
 		return removeu;
 	}
 
 	public Endereco consultar(int id) {
 		Endereco enderecoConsultado = null;
 		Connection conexao = Banco.getConnection();
-		String sql = " SELECT * FROM ENDERECO "
-					+" WHERE ID=?";
+		String sql = " SELECT * FROM ENDERECO " + " WHERE ID=?";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
-		
+
 		try {
 			stmt.setInt(1, id);
 			ResultSet resultado = stmt.executeQuery();
-			
-			if(resultado.next()) {
+
+			if (resultado.next()) {
 				enderecoConsultado = construirDoResultSet(resultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao consultar endereço (id:" + id + ". Causa:" + e.getMessage());
 		}
-		
+
 		return enderecoConsultado;
 	}
 
@@ -114,25 +109,25 @@ public class EnderecoDAO {
 		enderecoConsultado.setUf(resultado.getString("uf"));
 		return enderecoConsultado;
 	}
-	
-	public ArrayList<Endereco> consultarTodos(){
+
+	public ArrayList<Endereco> consultarTodos() {
 		ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
 
 		Connection conexao = Banco.getConnection();
 		String sql = " SELECT * FROM ENDERECO ";
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
-		
+
 		try {
 			ResultSet resultado = stmt.executeQuery();
-			
-			while(resultado.next()) {
+
+			while (resultado.next()) {
 				Endereco enderecoConsultado = construirDoResultSet(resultado);
 				enderecos.add(enderecoConsultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao consultar todos os endereços. Causa:" + e.getMessage());
 		}
-		
+
 		return enderecos;
 	}
 }

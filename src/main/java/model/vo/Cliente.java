@@ -76,7 +76,6 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", linhas=" + linhas
-				+ "]";
+		return nome + " - " + cpf + " (" + linhas.size() + " linha(s))";
 	}
 }

@@ -1,6 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.bo.ClienteBO;
+import model.dao.ClienteDAO;
+import model.dao.EnderecoDAO;
 import model.vo.Cliente;
 
 public class ClienteController {
@@ -27,6 +31,14 @@ public class ClienteController {
 		}
 		
 		return mensagem;
+	}
+
+	public ArrayList<Cliente> consultarTodos() {
+		return bo.consultarTodos();
+	}
+
+	public boolean remover(Cliente removerCliente) {
+		return bo.remover(removerCliente);
 	}
 	
 }
