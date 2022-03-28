@@ -18,19 +18,17 @@ import model.vo.Telefone;
 public class ExecutavelTelefonia {
 
 	public static void main(String[] argumentos) {
+		
 //		testarCrudEndereco();
 //		testarCrudCliente();
-//		
-//		//TODO Exercicio
+//
 //		testarCrudTelefone();
-		// testarCrudLinhaTelefonica();
-
-		
-		// testarCadastroClienteComJOptionPane();
-		exclusaoClienteComJOptionPane();
-
-		// TODO exercício (implementar o cadastro com MVC completo)
-		// testarCadastroEnderecoComJOptionPane();
+//		testarCrudLinhaTelefonica();
+//		
+//		testarCadastroClienteComJOptionPane();
+//		exclusaoClienteComJOptionPane();
+//
+//		testarCadastroEnderecoComJOptionPane();
 
 	}
 
