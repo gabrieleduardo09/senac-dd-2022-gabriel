@@ -14,6 +14,8 @@ import model.vo.Cliente;
 import model.vo.Endereco;
 import model.vo.LinhaTelefonica;
 import model.vo.Telefone;
+import view.TelaCadastroCliente;
+import view.TelaCadastroEndereco;
 
 public class ExecutavelTelefonia {
 
@@ -29,7 +31,12 @@ public class ExecutavelTelefonia {
 //		exclusaoClienteComJOptionPane();
 //
 //		testarCadastroEnderecoComJOptionPane();
+		
+//		TelaCadastroCliente novaTela = new TelaCadastroCliente();
+//		novaTela.setVisible(true);
 
+		TelaCadastroEndereco novaTelaCadastroEndereco = new TelaCadastroEndereco();
+		novaTelaCadastroEndereco.setVisible(true);
 	}
 
 	private static void exclusaoClienteComJOptionPane() {
