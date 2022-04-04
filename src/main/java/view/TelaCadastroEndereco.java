@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import controller.EnderecoController;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCadastroEndereco extends JFrame {
 
@@ -19,10 +22,11 @@ public class TelaCadastroEndereco extends JFrame {
 	private JTextField txtCidade;
 	private JTextField txtUf;
 	private JTextField txtCep;
+	private JButton btnLimpar;
 	
 	public TelaCadastroEndereco() {
 		this.setTitle("Cadastro de Endereço");
-		this.setBounds(300, 300, 600, 170);
+		this.setBounds(300, 300, 580, 260);
 
 		// Componentes
 		// RUA
@@ -60,7 +64,7 @@ public class TelaCadastroEndereco extends JFrame {
 		txtCep = new JTextField();
 		txtCep.setBounds(100, 130, 450, 20);
 
-		this.setLayout(null);
+		getContentPane().setLayout(null);
 		this.getContentPane().add(lblRua);
 		this.getContentPane().add(txtRua);
 		this.getContentPane().add(lblNumero);
@@ -71,6 +75,18 @@ public class TelaCadastroEndereco extends JFrame {
 		this.getContentPane().add(txtUf);
 		this.getContentPane().add(lblCep);
 		this.getContentPane().add(txtCep);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnSalvar.setBounds(183, 161, 100, 50);
+		getContentPane().add(btnSalvar);
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds(293, 161, 100, 50);
+		getContentPane().add(btnLimpar);
+		
 	}
-
 }

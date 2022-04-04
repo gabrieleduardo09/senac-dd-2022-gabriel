@@ -10,6 +10,7 @@ import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
 import model.dao.LinhaTelefonicaDAO;
 import model.dao.TelefoneDAO;
+import model.exception.ErroAoSalvarClienteException;
 import model.vo.Cliente;
 import model.vo.Endereco;
 import model.vo.LinhaTelefonica;
@@ -32,11 +33,14 @@ public class ExecutavelTelefonia {
 //
 //		testarCadastroEnderecoComJOptionPane();
 		
-//		TelaCadastroCliente novaTela = new TelaCadastroCliente();
-//		novaTela.setVisible(true);
+		//TelaCadastroCliente novaTela = new TelaCadastroCliente();
+		//novaTela.setVisible(true);
 
 		TelaCadastroEndereco novaTelaCadastroEndereco = new TelaCadastroEndereco();
 		novaTelaCadastroEndereco.setVisible(true);
+		// Terminar...
+		
+		
 	}
 
 	private static void exclusaoClienteComJOptionPane() {
@@ -69,9 +73,14 @@ public class ExecutavelTelefonia {
 				"Cadastro de novo cliente", JOptionPane.INFORMATION_MESSAGE, null, enderecos.toArray(), null);
 
 		Cliente novoCliente = new Cliente(nome, cpf, enderecoSelecionado);
-		String mensagem = clienteController.salvar(novoCliente);
+		String mensagem;
 
-		JOptionPane.showMessageDialog(null, mensagem, "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+		try {
+			mensagem = clienteController.salvar(novoCliente);
+			JOptionPane.showMessageDialog(null, mensagem,"Mensagem", JOptionPane.INFORMATION_MESSAGE);
+		} catch (ErroAoSalvarClienteException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"Alerta", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	private static void testarCrudTelefone() {

@@ -105,7 +105,7 @@ public class ClienteDAO implements BaseDAO<Cliente> {
 		clienteConsultado.setNome(resultado.getString("nome"));
 
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		Endereco enderecoDoCliente = enderecoDAO.consultar(resultado.getInt("id_endereco"));
+		Endereco enderecoDoCliente = enderecoDAO.consultar(resultado.getInt("id"));
 		clienteConsultado.setEndereco(enderecoDoCliente);
 
 		LinhaTelefonicaDAO linhaDAO = new LinhaTelefonicaDAO();

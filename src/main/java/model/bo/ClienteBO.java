@@ -3,6 +3,7 @@ package model.bo;
 import java.util.ArrayList;
 
 import model.dao.ClienteDAO;
+import model.exception.ClienteComLinhaTelefonicaException;
 import model.vo.Cliente;
 
 public class ClienteBO {
@@ -42,5 +43,18 @@ public class ClienteBO {
 		}
 
 		return excluir;
+	}
+
+	public boolean excluir(Cliente clienteParaExcluir) throws ClienteComLinhaTelefonicaException {
+		boolean excluiu;
+		
+		if(clienteParaExcluir.getLinhas().size() > 0) {
+			throw new ClienteComLinhaTelefonicaException("Cliente informado não pode ser excluído,"
+					+ " pois possui linha(s) telefônica(s)");
+		}else {
+			excluiu = dao.remover(clienteParaExcluir.getId());
+		}
+		
+		return excluiu;
 	}
 }

@@ -26,7 +26,7 @@ public class Telefone {
 
 	@Override
 	public String toString() {
-		return "(" + this.ddd + ") " + numero + " [" + (this.tipo == TIPO_FIXO ? "Fixo" : "MÃ³vel") + "]"; 
+		return "(" + this.ddd + ") " + numero + " [" + (this.tipo == TIPO_FIXO ? "Fixo" : "Móvel") + "]"; 
 	}
 	
 	public int getId() {

@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import model.bo.ClienteBO;
 import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
+import model.exception.ClienteComLinhaTelefonicaException;
+import model.exception.ErroAoSalvarClienteException;
 import model.vo.Cliente;
 
 public class ClienteController {
 
 	public ClienteBO bo = new ClienteBO();
 	
-	public String salvar(Cliente novo) {
+	public String salvar(Cliente novo) throws ErroAoSalvarClienteException {
 		String mensagem = "";
 		
 		if(novo == null) {
@@ -24,6 +26,8 @@ public class ClienteController {
 			}
 			
 			mensagem += "CPF deve conter 11 dígitos";
+			
+			throw new ErroAoSalvarClienteException(mensagem);
 		}
 		
 		if(mensagem.isEmpty()) {
@@ -39,6 +43,17 @@ public class ClienteController {
 
 	public boolean remover(Cliente removerCliente) {
 		return bo.remover(removerCliente);
+	}
+	
+	public String excluir(Cliente clienteParaExcluir) throws ClienteComLinhaTelefonicaException {
+		String mensagem = "";
+		
+		if(bo.excluir(clienteParaExcluir)) {
+			mensagem = "Cliente " + clienteParaExcluir.getNome() 
+				+ " (" + clienteParaExcluir.getCpf() + ") foi excluÃ­do";
+		}
+		
+		return mensagem;
 	}
 	
 }
