@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
+import model.vo.Cliente;
 import model.vo.Endereco;
 import model.vo.LinhaTelefonica;
 import model.vo.Telefone;
@@ -166,5 +167,28 @@ public class LinhaTelefonicaDAO {
 		}
 
 		return linhasDoCliente;
+	}
+
+	public Cliente obterDonoAtualDoTelefone(int id) {
+		Cliente donoLinhaTelefonica = null;
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT ID_CLIENTE FROM LINHA_TELEFONICA WHERE LINHA_TELEFONICA.ID_TELEFONE = ? AND LINHA_TELEFONICA.DT_DESATIVACAO IS NULL;";
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+			stmt.setInt(1, id);
+			ResultSet resultado = stmt.executeQuery();
+
+			if (resultado.next()) {
+				int idDono = resultado.getInt(1);
+				ClienteDAO clienteDAO = new ClienteDAO();
+				donoLinhaTelefonica = clienteDAO.consultar(idDono);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar linha telefônica (id:" + id + ". Causa:" + e.getMessage());
+		}
+
+		//return linhaTelefonicaConsultada;
+		return donoLinhaTelefonica;
 	}
 }
