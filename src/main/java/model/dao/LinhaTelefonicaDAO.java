@@ -20,7 +20,7 @@ import util.DateUtils;
 public class LinhaTelefonicaDAO {
 	public LinhaTelefonica inserir(LinhaTelefonica novaLinha) {
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO LINHA_TELEFONICA(ID_CLIENTE, ID_LINHA_TELEFONICA, DT_ATIVACAO, DT_DESATIVACAO)"
+		String sql = " INSERT INTO LINHA_TELEFONICA(ID_CLIENTE, ID_TELEFONE, DT_ATIVACAO, DT_DESATIVACAO)"
 				+ "VALUES (?, ?, ?, ?);";
 
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conexao, sql);
@@ -38,7 +38,7 @@ public class LinhaTelefonicaDAO {
 				novaLinha.setId(chavesGeradas.getInt(1));
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir linha telefÃ´nica. Causa:" + e.getMessage());
+			System.out.println("Erro ao inserir linha telefônica. Causa:" + e.getMessage());
 		}
 
 		return novaLinha;
@@ -190,5 +190,24 @@ public class LinhaTelefonicaDAO {
 
 		//return linhaTelefonicaConsultada;
 		return donoLinhaTelefonica;
+	}
+
+	public boolean desativarLinhaAtual(int id) {
+		boolean desativou = false;
+		Connection conexao = Banco.getConnection();
+		
+		String sql = " UPDATE LINHA_TELEFONICA 1 SET dt_desativacao = ? WHERE l.id_telefone = ? AND dt_desativacao IS NULL ";
+		
+		PreparedStatement stmt = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			stmt.setInt(1, id);
+			int linhasAfetadas = stmt.executeUpdate();
+			desativou = linhasAfetadas > 0;
+		} catch (SQLException e) {
+			System.out.println("Erro ao desativar linha atual do telefone (" + id + "). Causa:" + e.getMessage());
+		}
+		
+		return desativou;
 	}
 }

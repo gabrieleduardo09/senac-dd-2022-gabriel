@@ -33,11 +33,11 @@ public class ExecutavelTelefonia {
 //
 //		testarCadastroEnderecoComJOptionPane();
 		
-		//TelaCadastroCliente novaTela = new TelaCadastroCliente();
-		//novaTela.setVisible(true);
+		TelaCadastroCliente novaTela = new TelaCadastroCliente();
+		novaTela.setVisible(true);
 
-		TelaCadastroEndereco novaTelaCadastroEndereco = new TelaCadastroEndereco();
-		novaTelaCadastroEndereco.setVisible(true);
+//		TelaCadastroEndereco novaTelaCadastroEndereco = new TelaCadastroEndereco();
+//		novaTelaCadastroEndereco.setVisible(true);
 		// Terminar...
 		
 		

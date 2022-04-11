@@ -87,27 +87,6 @@ public class TelaCadastroCliente extends JFrame {
 		this.getContentPane().add(btnSalvar);
 		
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				btnLimpar.setForeground(Color.RED);
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				btnLimpar.setForeground(Color.blue);
-			}
-			@Override
-			public void mouseClicked(MouseEvent evento) {
-				if(evento.getButton() == MouseEvent.BUTTON1) {
-					btnLimpar.setForeground(Color.GREEN);
-				}
-				
-				//Botão direito
-				if(evento.getButton() == MouseEvent.BUTTON3) {
-					btnLimpar.setForeground(Color.YELLOW);
-				}
-			}
-		});
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				limparCampos();
